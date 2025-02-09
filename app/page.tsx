@@ -49,15 +49,15 @@ export default function Home() {
         <Link
           isExternal
           className="px-6 py-2 border-2 border-white text-white rounded-full hover:bg-white hover:text-black transition duration-300"
-          href="#get-started"
+          href="/login"
         >
-          Get Started
+          Log In
         </Link>
       </nav>
 
       {/* Hero Section */}
       <section
-        className="relative flex items-center justify-center h-screen text-center"
+        className="relative flex items-center justify-center w-full h-screen text-center"
         style={{
           backgroundImage: "url('/hero-bg.jpg')",
           backgroundSize: "cover",
