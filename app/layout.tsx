@@ -49,7 +49,7 @@ export default function RootLayout({
               {children}
             </main>
             <footer className="w-full flex items-center justify-center py-3 bg-black text-white">
-              <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
+              <span className="font-medium transition-colors group-hover:text-blue-300 px-5 text-center">
                 HackNYU 2025
               </span>
               <Link
@@ -61,10 +61,10 @@ export default function RootLayout({
                 <img
                   src="github-mark-white.svg"
                   alt="GitHub Logo"
-                  className="h-8 w-8 transform transition-transform duration-200 group-hover:scale-125"
+                  className="h-8 w-8 transform transition-transform duration-200 group-hover:scale-125 text-center"
                 />
               </Link>
-              <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
+              <span className="font-medium transition-colors group-hover:text-blue-300 px-5 text-center">
                 Made by Arnab, Tyler, Eva, and Lucas
               </span>
             </footer>

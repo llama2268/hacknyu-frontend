@@ -34,7 +34,6 @@ export const Navbar = () => {
       <ul className="hidden md:flex space-x-8">
       </ul>
       <Link
-        isExternal
         className="px-6 py-2 border-2 border-white text-white rounded-full hover:bg-white hover:text-black transition duration-300"
         href="/login"
       >

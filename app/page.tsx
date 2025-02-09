@@ -47,7 +47,6 @@ export default function Home() {
           </li>
         </ul>
         <Link
-          isExternal
           className="px-6 py-2 border-2 border-white text-white rounded-full hover:bg-white hover:text-black transition duration-300"
           href="/login"
         >
@@ -79,7 +78,6 @@ export default function Home() {
           </p>
           <div className="mt-8 flex justify-center gap-6 animate-fadeIn delay-800">
             <Link
-              isExternal
               className={buttonStyles({
                 color: "primary",
                 radius: "full",
