@@ -2,12 +2,11 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Link } from "@heroui/link";
 import clsx from "clsx";
-
 import { Providers } from "./providers";
-
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
+import LoadingWrapper from "./components/LoadingWrapper";
 
 export const metadata: Metadata = {
   title: {
@@ -17,6 +16,8 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head />
       <body
         className={clsx(
@@ -41,34 +42,20 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            {/* Remove container classes here to let content span full width */}
-            <main className="w-full flex-grow pt-16 px-6">
-              {children}
-            </main>
-            <footer className="w-full flex items-center justify-center py-3 bg-black text-white">
-              <span className="font-medium transition-colors group-hover:text-blue-300 px-5 text-center">
-                HackNYU 2025
-              </span>
-              <Link
-                isExternal
-                className="flex items-center px-3"
-                href="https://github.com/llama2268/hacknyu-frontend"
-                title="Visit GitHub Repository"
-              >
-                <img
-                  src="github-mark-white.svg"
-                  alt="GitHub Logo"
-                  className="h-8 w-8 transform transition-transform duration-200 group-hover:scale-125 text-center"
-                />
-              </Link>
-              <span className="font-medium transition-colors group-hover:text-blue-300 px-5 text-center">
-                Made by Arnab, Tyler, Eva, and Lucas
-              </span>
-            </footer>
-          </div>
+        <Providers>
+          <LoadingWrapper>
+            <div className="relative flex flex-col h-screen">
+              <Navbar />
+              <main className="container mx-auto max-w-7xl flex-grow">
+                {children}
+              </main>
+              <footer className="w-full flex items-center justify-center py-3">
+                <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
+                  Made by Arnab, Tyler, Eva, and Lucas
+                </span>
+              </footer>
+            </div>
+          </LoadingWrapper>
         </Providers>
       </body>
     </html>

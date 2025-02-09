@@ -1,13 +1,15 @@
+import ProtectedRoute from "../components/ProtectedRoute";
+
 export default function InterfaceLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <section>
-      <div>
-        {children}
-      </div>
-    </section>
+    <ProtectedRoute>
+      <section>
+        <div>{children}</div>
+      </section>
+    </ProtectedRoute>
   );
 }

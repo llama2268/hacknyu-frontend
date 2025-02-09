@@ -14,6 +14,10 @@ const nextConfig = {
       'react/no-unescaped-entities': 'off',
     },
   },
+  // Add port configuration
+  serverOptions: {
+    port: 3001
+  }
 }
 
 module.exports = nextConfig

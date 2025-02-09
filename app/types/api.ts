@@ -26,4 +26,28 @@ export interface GenerateRecipeParams {
     highProtein?: boolean;
   };
   maxCookingTime?: number;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  name?: string;
+  fitnessGoal?: FitnessGoals;
+  preferences?: UserPreferences;
+  savedRecipes: Recipe[];
+  favoriteRecipes: Recipe[];
+}
+
+export interface UserPreferences {
+  dietaryRestrictions?: string[];
+  cookingSkillLevel?: number;
+  preferredCuisines?: string[];
+  mealPlanningFrequency?: string;
+}
+
+export interface Activity {
+  id: string;
+  type: string;
+  recipeId?: string;
+  timestamp: Date;
 } 
