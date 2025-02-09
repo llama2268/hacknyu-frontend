@@ -13,7 +13,7 @@ export default function LoginPage() {
 
     return (  
     <div className="min-h-screen flex items-center justify-center px-6 md:px-12 bg-gradient-to-r">
-      <div className="w-full max-w-xl bg-white py-12 px-10 rounded-2xl shadow-2xl transform transition-all duration-500 hover:scale-105">
+      <div className="w-full max-w-xl bg-white py-12 px-10 rounded-2xl shadow-2xl transform transition-all duration-500 hover:scale-105 text-center">
         <h2 className={title({ class: "text-center text-4xl font-extrabold text-gray-800" })}>
           Welcome Back
         </h2>
