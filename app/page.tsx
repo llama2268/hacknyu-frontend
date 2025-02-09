@@ -7,6 +7,7 @@ import { Code } from "@heroui/code";
 import { button as buttonStyles } from "@heroui/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
+import Image from "next/image"
 
 export default function Home() {
   return (
@@ -93,7 +94,7 @@ export default function Home() {
       </section>
 
       <section id="features" className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 text-center">
           <h2
             className={title({
               class: "text-center text-4xl font-semibold text-gray-800",
@@ -116,9 +117,17 @@ export default function Home() {
               viewport={{ once: true }}
               className="p-6 bg-white rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
-              <h3 className="text-2xl font-bold text-gray-700">
-                Personalized Meal Plans
-              </h3>
+          <h2 className="text-4xl font-bold text-gray-800 mb-6 text-center">
+            Personalized Meal Plan
+          </h2>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/card1.jpg"
+              alt="Personalized Meal Plan"
+              width={800}
+              height={500}
+              className="rounded-lg shadow-lg"
+            /></div>
               <p className="mt-3 text-gray-600">
                 Tailor-made schedules that align with your goals and available ingredients.
               </p>
@@ -131,9 +140,17 @@ export default function Home() {
               viewport={{ once: true }}
               className="p-6 bg-white rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
-              <h3 className="text-2xl font-bold text-gray-700">
-                Smart Ingredient Management
-              </h3>
+          <h2 className="text-4xl font-bold text-gray-800 mb-6 text-center">
+          Smart Ingredient Management
+              </h2>
+              <div className="flex flex-col items-center">
+            <Image
+              src="/card2.jpg"
+              alt="Personalized Meal Plan"
+              width={800}
+              height={500}
+              className="rounded-lg shadow-lg"
+            /></div>
               <p className="mt-3 text-gray-600">
                 Optimize your groceries and reduce waste through intelligent recommendations.
               </p>
@@ -146,9 +163,17 @@ export default function Home() {
               viewport={{ once: true }}
               className="p-6 bg-white rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
-              <h3 className="text-2xl font-bold text-gray-700">
-                Community & Sharing
-              </h3>
+          <h2 className="text-4xl font-bold text-gray-800 mb-6 text-center">
+          Community & Sharing
+              </h2>
+              <div className="flex flex-col items-center">
+            <Image
+              src="/card3.jpg"
+              alt="Personalized Meal Plan"
+              width={800}
+              height={500}
+              className="rounded-lg shadow-lg"
+            /></div>
               <p className="mt-3 text-gray-600">
                 Discover, save, and share recipes with a community passionate about healthy
                 living.
@@ -159,7 +184,7 @@ export default function Home() {
       </section>
 
       <section id="how-it-works" className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 text-center">
           <h2
             className={title({
               class: "text-center text-4xl font-semibold text-gray-800",
@@ -292,7 +317,6 @@ export default function Home() {
           </p>
           <div className="mt-8">
             <Link
-              isExternal
               className={buttonStyles({
                 color: "primary",
                 radius: "full",
