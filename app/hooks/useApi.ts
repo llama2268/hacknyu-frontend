@@ -1,7 +1,7 @@
-import { useAuth } from '@/contexts/AuthContext';
-import { Recipe, FitnessGoals, GenerateRecipeParams } from '@/types/api';
+import { useAuth } from '../contexts/AuthContext';
+import { Recipe, FitnessGoals, GenerateRecipeParams } from '../types/api';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export function useApi() {
   const { token } = useAuth();
