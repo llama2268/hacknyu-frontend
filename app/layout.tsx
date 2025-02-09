@@ -40,14 +40,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <Providers>
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
           geist.className
         )}
       >
-        <Providers>
+        
           <LoadingWrapper>
             <div className="relative flex flex-col h-screen">
               <Navbar />
@@ -59,8 +59,8 @@ export default function RootLayout({
               </footer>
             </div>
           </LoadingWrapper>
-        </Providers>
       </body>
+      </Providers>
     </html>
   );
 }

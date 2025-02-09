@@ -264,7 +264,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="get-started" className="py-16 bg-gradient-to-r from-purple-700 to-indigo-700">
+      <section id="get-started" className="py-16 bg-gradient-to-r from-purple-400 to-indigo-400">
         <div className="container mx-auto px-4 text-center text-white">
           <h2 className={title({ class: "text-3xl md:text-5xl font-bold" })}>
             Ready to transform your meal prep?
