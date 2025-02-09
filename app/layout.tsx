@@ -47,14 +47,25 @@ export default function RootLayout({
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               {children}
             </main>
-            <footer className="w-full flex items-center justify-center py-3">
-              <Link
-                isExternal
-                className="flex items-center gap-1 text-current"
-                href="https://heroui.com?utm_source=next-app-template"
-                title="heroui.com homepage"
-              >
-              </Link>
+            <footer className="w-full flex items-center justify-center py-3 bg-black-800 text-white">
+            <span className="font-medium transition-colors group-hover:text-blue-300">
+                      HackNYU 2025 
+                </span>
+                <Link
+                  isExternal
+                  className="flex flex-col items-center gap-2"
+                  href="https://github.com/llama2268/hacknyu-frontend"
+                  title="Visit GitHub Repository"
+                >
+                  <img
+                    src="github-mark-white.svg"
+                    alt="GitHub Logo"
+                    className="h-8 w-8 transform transition-transform duration-200 group-hover:scale-125"
+                  />
+                </Link>
+                <span className="font-medium transition-colors group-hover:text-blue-300">
+                      Made by Arnab, Tyler, Eva, and Lucas
+                </span>
             </footer>
           </div>
         </Providers>
