@@ -7,8 +7,17 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useApi } from "../hooks/useApi";
-import { Recipe, GenerateRecipeParams } from "../types/api";
-import { Button } from "@heroui/button";
+import type { Recipe, GenerateRecipeParams } from "../types/api";
+import { Button, type ButtonProps } from "@heroui/button";
+import { Card } from "@heroui/card";
+import { Input } from "@heroui/input";
+import { Select, SelectItem } from "@heroui/select";
+import { Textarea } from "@heroui/input";
+import { Switch } from "@heroui/switch";
+import { Divider } from "@heroui/divider";
+import { Alert } from "@heroui/alert";
+
+type PreferenceKey = keyof GenerateRecipeParams['preferences'];
 
 export default function HealthPage() {
   const router = useRouter();
@@ -58,7 +67,7 @@ export default function HealthPage() {
   }, [user, userApi]);
 
   // Handle recipe generation
-  const handleGenerateRecipe = async (e: React.FormEvent) => {
+  const handleGenerateRecipe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsGenerating(true);
     setError(null);
@@ -71,8 +80,31 @@ export default function HealthPage() {
         return;
       }
 
-      const recipe = await recipes.generateRecipe(formData);
-      setRecipeHistory(prev => [recipe, ...prev]);
+      // Clean the form data before sending
+      const cleanFormData = {
+        ...formData,
+        ingredients: formData.ingredients.filter(Boolean), // Remove empty strings
+        preferences: Object.fromEntries(
+          Object.entries(formData.preferences).filter(([_, value]) => value)
+        )
+      };
+
+      const recipe = await recipes.generateRecipe(cleanFormData);
+      
+      // Ensure the recipe object is serializable
+      const safeRecipe = {
+        ...recipe,
+        id: recipe.id || Date.now().toString(), // Ensure there's an ID
+        ingredients: recipe.ingredients.map(ing => ({
+          item: String(ing.item),
+          quantity: String(ing.quantity)
+        })),
+        instructions: recipe.instructions.map(String),
+        cookingTime: Number(recipe.cookingTime),
+        difficulty: String(recipe.difficulty)
+      };
+
+      setRecipeHistory(prev => [safeRecipe, ...prev]);
       setShowForm(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate recipe');
@@ -83,7 +115,7 @@ export default function HealthPage() {
   };
 
   // Handle saving recipe
-  const handleSaveRecipe = async (recipeId: string) => {
+  const handleSaveRecipe = async (recipeId: Recipe['id']) => {
     try {
       await recipes.saveRecipe(recipeId);
       // Optimistically update UI
@@ -99,7 +131,7 @@ export default function HealthPage() {
   };
 
   // Handle favoriting recipe
-  const handleFavoriteRecipe = async (recipeId: string) => {
+  const handleFavoriteRecipe = async (recipeId: Recipe['id']) => {
     try {
       await recipes.favoriteRecipe(recipeId);
       // You might want to refresh saved recipes here
@@ -112,254 +144,193 @@ export default function HealthPage() {
   };
 
   // Handle form changes
-  const handleFormChange = (field: keyof GenerateRecipeParams, value: any) => {
+  const handleFormChange = <K extends keyof GenerateRecipeParams>(
+    field: K, 
+    value: GenerateRecipeParams[K]
+  ) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
 
+  // Type the button props
+  const generateButtonProps: ButtonProps = {
+    size: "lg",
+    variant: "solid",
+    disabled: isGenerating,
+    className: "bg-blue-600 hover:bg-blue-700 text-white"
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-100 via-teal-100 to-blue-200 py-16 px-6 pt-20">
-      <div className="max-w-7xl mx-auto">
-        {/* Show error message if exists */}
+    <div className="min-h-screen bg-slate-100 dark:bg-gray-900">
+      <div className="w-full max-w-[2000px] mx-auto px-6 pt-24 pb-12">
         {error && (
-          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          <Alert 
+            color="danger"
+            className="mb-6 dark:bg-red-900/20"
+          >
             {error}
-          </div>
+          </Alert>
         )}
 
-        <header className="mb-12 text-center">
-          <h1 className={title({ class: "text-5xl font-extrabold text-gray-800" })}>
-            Welcome, {name}!
+        <header className="mb-12">
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-white">
+            Welcome, {name}
           </h1>
-          <p className="mt-4 text-lg text-gray-700">
-            Your gateway to a healthier lifestyle. Manage your recipes, saved ideas, and meal history with ease.
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            Manage your recipes and discover new ones tailored to your preferences.
           </p>
         </header>
 
-        {/* Saved Recipes Section */}
-        <section className="mb-12 p-8 bg-white rounded-xl shadow-lg">
-          <h2 className="text-4xl font-semibold text-gray-800 mb-4">
-            Saved Recipes ({savedRecipes.length})
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {savedRecipes.map((recipe) => (
-              <div key={recipe.id} className="p-4 border rounded-lg">
-                <h3 className="font-semibold">{recipe.name}</h3>
-                <p className="text-sm text-gray-600">{recipe.ingredients}</p>
-                <div className="mt-2 flex gap-2">
-                  <button
-                    onClick={() => handleFavoriteRecipe(recipe.id)}
-                    className="text-yellow-500 hover:text-yellow-600"
-                  >
-                    ★ Favorite
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Recipe History Section */}
-        <section className="mb-12 p-8 bg-white rounded-xl shadow-lg">
-          <h2 className="text-4xl font-semibold text-gray-800 mb-4">
-            My History ({recipeHistory.length})
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recipeHistory.map((recipe) => (
-              <div key={recipe.id} className="p-6 border rounded-lg bg-white shadow-sm">
-                <h3 className="text-xl font-semibold mb-3">{recipe.name}</h3>
-                
-                {/* Ingredients */}
-                <div className="mb-4">
-                  <h4 className="font-medium text-gray-700 mb-2">Ingredients:</h4>
-                  <ul className="list-disc list-inside space-y-1">
-                    {recipe.ingredients.map((ing, idx) => (
-                      <li key={idx} className="text-gray-600">
-                        {ing.quantity} {ing.item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Instructions */}
-                <div className="mb-4">
-                  <h4 className="font-medium text-gray-700 mb-2">Instructions:</h4>
-                  <ol className="list-decimal list-inside space-y-2">
-                    {recipe.instructions.map((step, idx) => (
-                      <li key={idx} className="text-gray-600">{step}</li>
-                    ))}
-                  </ol>
-                </div>
-
-                {/* Recipe Info */}
-                <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-                  <div>
-                    <span className="font-medium">Cooking Time: </span>
-                    <span className="text-gray-600">{recipe.cookingTime} minutes</span>
-                  </div>
-                  <div>
-                    <span className="font-medium">Difficulty: </span>
-                    <span className="text-gray-600">{recipe.difficulty}</span>
-                  </div>
-                </div>
-
-                {/* Nutritional Info */}
-                <div className="bg-gray-50 p-3 rounded-md mb-4">
-                  <h4 className="font-medium text-gray-700 mb-2">Nutritional Information:</h4>
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div>
-                      <span className="font-medium">Calories: </span>
-                      <span className="text-gray-600">{recipe.nutritionalInfo.calories}</span>
-                    </div>
-                    <div>
-                      <span className="font-medium">Protein: </span>
-                      <span className="text-gray-600">{recipe.nutritionalInfo.protein}g</span>
-                    </div>
-                    <div>
-                      <span className="font-medium">Carbs: </span>
-                      <span className="text-gray-600">{recipe.nutritionalInfo.carbs}g</span>
-                    </div>
-                    <div>
-                      <span className="font-medium">Fat: </span>
-                      <span className="text-gray-600">{recipe.nutritionalInfo.fat}g</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleSaveRecipe(recipe.id)}
-                    className="text-blue-500 hover:text-blue-600"
-                  >
-                    Save Recipe
-                  </button>
-                  <button
-                    onClick={() => handleFavoriteRecipe(recipe.id)}
-                    className="text-yellow-500 hover:text-yellow-600"
-                  >
-                    ★ Favorite
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* Recipe Generation Form */}
-        <div className="mt-12 flex justify-center">
+        <div className="mb-12">
           <Button
+            {...generateButtonProps}
+            className="bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
             onClick={() => setShowForm(!showForm)}
-            disabled={isGenerating}
-            className={`${buttonStyles({
-              color: "primary",
-              radius: "full",
-              size: "lg",
-              variant: "shadow",
-            })} transform hover:scale-105 hover:shadow-lg transition-transform duration-300`}
           >
-            {isGenerating ? "Generating..." : showForm ? "Hide Recipe Form" : "Generate a New Recipe"}
+            {isGenerating ? "Generating..." : showForm ? "Hide Form" : "Generate New Recipe"}
           </Button>
+
+          {showForm && (
+            <Card className="mt-6 p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Generate a Custom Recipe
+              </h2>
+              <form onSubmit={handleGenerateRecipe} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Available Ingredients
+                  </label>
+                  <Textarea
+                    placeholder="List ingredients (comma separated)"
+                    value={formData.ingredients.join(", ")}
+                    onChange={(e) => handleFormChange("ingredients", e.target.value.split(",").map(i => i.trim()))}
+                    rows={4}
+                    className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Cooking Skill Level
+                  </label>
+                  <Select
+                    value={String(formData.skillLevel)}
+                    onChange={(value) => handleFormChange("skillLevel", Number(value))}
+                  >
+                    <SelectItem value="1">Beginner</SelectItem>
+                    <SelectItem value="2">Intermediate</SelectItem>
+                    <SelectItem value="3">Advanced</SelectItem>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Dietary Preferences
+                  </label>
+                  <div className="space-y-3">
+                    {Object.entries(formData.preferences || {}).map(([key, value]) => (
+                      <div key={key} className="flex items-center gap-3">
+                        <Switch
+                          checked={value}
+                          onChange={(checked) => handleFormChange("preferences", {
+                            ...formData.preferences,
+                            [key]: checked
+                          })}
+                        />
+                        <span className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                          {key.replace(/([A-Z])/g, ' $1')}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  {...generateButtonProps}
+                >
+                  {isGenerating ? "Generating..." : "Generate Recipe"}
+                </Button>
+              </form>
+            </Card>
+          )}
         </div>
 
-        {showForm && (
-          <div className="mt-12 p-8 bg-white rounded-xl shadow-lg max-w-2xl mx-auto animate-slideIn">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-              Generate a Custom Recipe
-            </h2>
-            <form onSubmit={handleGenerateRecipe} className="space-y-4">
-              {/* Ingredients */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Available Ingredients
-                </label>
-                <textarea
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                  rows={4}
-                  placeholder="List the ingredients you have available"
-                  value={formData.ingredients.join(", ")}
-                  onChange={(e) => handleFormChange("ingredients", e.target.value.split(",").map(i => i.trim()))}
-                />
-              </div>
+        {/* Recipe History */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+          {recipeHistory.map((recipe) => (
+            <Card 
+              key={recipe.id} 
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-200"
+            >
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  {recipe.name}
+                </h3>
+                
+                <div className="space-y-4">
+                  {/* Ingredients */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Ingredients
+                    </h4>
+                    <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                      {recipe.ingredients.map((ing, idx) => (
+                        <li key={idx}>• {ing.quantity} {ing.item}</li>
+                      ))}
+                    </ul>
+                  </div>
 
-              {/* Skill Level */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Cooking Skill Level
-                </label>
-                <select
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md"
-                  value={formData.skillLevel}
-                  onChange={(e) => handleFormChange("skillLevel", parseInt(e.target.value))}
-                >
-                  <option value={1}>Beginner</option>
-                  <option value={2}>Intermediate</option>
-                  <option value={3}>Advanced</option>
-                </select>
-              </div>
+                  {/* Instructions */}
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                      Instructions
+                    </h4>
+                    <ol className="text-sm text-gray-600 dark:text-gray-400 space-y-1 list-decimal list-inside">
+                      {recipe.instructions.map((step, idx) => (
+                        <li key={idx}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
 
-              {/* Dietary Preferences */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Dietary Preferences
-                </label>
-                <div className="space-y-2">
-                  {Object.entries(formData.preferences || {}).map(([key, value]) => (
-                    <label key={key} className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={value}
-                        onChange={(e) => handleFormChange("preferences", {
-                          ...formData.preferences,
-                          [key]: e.target.checked
-                        })}
-                      />
-                      <span className="capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
-                    </label>
-                  ))}
+                  {/* Recipe Info */}
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-700 dark:text-gray-300">Time: </span>
+                      <span className="text-gray-600 dark:text-gray-400">{recipe.cookingTime}m</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-700 dark:text-gray-300">Difficulty: </span>
+                      <span className="text-gray-600 dark:text-gray-400">{recipe.difficulty}</span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="light"
+                      onClick={() => handleSaveRecipe(recipe.id)}
+                      className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="light"
+                      onClick={() => handleFavoriteRecipe(recipe.id)}
+                      className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      ★ Favorite
+                    </Button>
+                  </div>
                 </div>
               </div>
-
-              {/* Max Cooking Time */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Maximum Cooking Time (minutes)
-                </label>
-                <input
-                  type="number"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-md"
-                  value={formData.maxCookingTime}
-                  onChange={(e) => handleFormChange("maxCookingTime", parseInt(e.target.value))}
-                  min={0}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isGenerating}
-                className="w-full py-3 text-lg font-semibold rounded-md bg-gradient-to-r from-green-500 to-blue-500 text-white hover:from-green-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-green-500 transform hover:scale-105 hover:shadow-lg transition-transform duration-300 disabled:opacity-50"
-              >
-                {isGenerating ? "Generating Recipe..." : "Generate Recipe"}
-              </button>
-            </form>
-          </div>
-        )}
-
-        <div className="mt-8 flex justify-center">
-          <button
-            onClick={() => router.push("/")}
-            className={`${buttonStyles({
-              color: "secondary",
-              radius: "full",
-              size: "lg",
-              variant: "shadow",
-            })} flex items-center gap-2`}
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Home
-          </button>
+            </Card>
+          ))}
         </div>
       </div>
     </div>

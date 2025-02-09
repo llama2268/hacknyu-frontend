@@ -87,6 +87,12 @@ export function useApi(): {
         if (!response.ok) throw new Error('Failed to get recommendations');
         return response.json();
       },
+
+      getRecipeHistory: async (): Promise<Recipe[]> => {
+        const response = await fetch(`${API_BASE_URL}/recipes/history`, { headers });
+        if (!response.ok) throw new Error('Failed to fetch recipe history');
+        return response.json();
+      },
     }),
     [headers]
   );

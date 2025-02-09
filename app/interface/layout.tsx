@@ -7,8 +7,8 @@ export default function InterfaceLayout({
 }) {
   return (
     <ProtectedRoute>
-      <section>
-        <div>{children}</div>
+      <section className="min-h-screen bg-slate-100 dark:bg-gray-900 transition-colors duration-200">
+        <div className="p-10">{children}</div>
       </section>
     </ProtectedRoute>
   );

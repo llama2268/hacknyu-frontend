@@ -4,7 +4,7 @@ import { Link } from "@heroui/link";
 import clsx from "clsx";
 import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/app/components/navbar";
 import LoadingWrapper from "./components/LoadingWrapper";
 import { Geist } from "next/font/google";
 
@@ -51,9 +51,7 @@ export default function RootLayout({
           <LoadingWrapper>
             <div className="relative flex flex-col h-screen">
               <Navbar />
-              <main className="container mx-auto max-w-7xl flex-grow">
                 {children}
-              </main>
               <footer className="w-full flex items-center justify-center py-3">
                 <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
                   Made by Arnab, Tyler, Eva, and Lucas

@@ -1,11 +1,22 @@
 export interface Recipe {
-  instructions: any;
   id: string;
   name: string;
-  ingredients: string;
+  ingredients: Array<{
+    item: string;
+    quantity: string;
+  }>;
+  instructions: string[];
   steps: string;
   image: string;
   authorId?: string;
+  cookingTime: number;
+  difficulty: string;
+  nutritionalInfo: {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+  };
 }
 
 export interface FitnessGoals {
