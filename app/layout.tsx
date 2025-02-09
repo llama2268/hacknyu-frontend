@@ -46,7 +46,7 @@ export default function RootLayout({
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               {children}
             </main>
-            <footer className="w-full flex items-center justify-center py-3 bg-black-800 text-white">
+            <footer className="w-full flex items-center justify-center py-3 bg-black-800 text-white px-3">
             <span className="font-medium transition-colors group-hover:text-blue-300">
                       HackNYU 2025 
                 </span>
