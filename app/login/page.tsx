@@ -31,8 +31,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-100 via-teal-100 to-blue-200 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-900 via-gray-800 to-black py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-xl w-full space-y-8 p-12 rounded-2xl shadow-2xl border border-gray-700 bg-gradient-to-r from-gray-100 to-gray-50">
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
             {error}
@@ -40,7 +40,7 @@ export default function LoginPage() {
         )}
         
         <div>
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="text-center text-3xl font-extrabold text-gray-900 tracking-wide">
             {isLoginMode ? "Sign in to your account" : "Create a new account"}
           </h2>
         </div>
@@ -56,7 +56,7 @@ export default function LoginPage() {
                 name="name"
                 type="text"
                 required={!isLoginMode}
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
                 placeholder="Name"
                 value={formData.name}
                 onChange={handleChange}
@@ -73,7 +73,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+              className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
               placeholder="Email address"
               value={formData.email}
               onChange={handleChange}
@@ -89,7 +89,7 @@ export default function LoginPage() {
               name="password"
               type="password"
               required
-              className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+              className="appearance-none rounded-md block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
@@ -100,7 +100,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 transition-colors"
             >
               {isLoading ? "Loading..." : isLoginMode ? "Sign in" : "Register"}
             </button>
@@ -110,7 +110,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setIsLoginMode(!isLoginMode)}
-              className="text-sm text-green-600 hover:text-green-500"
+              className="text-sm text-green-600 hover:text-green-500 transition-colors"
             >
               {isLoginMode 
                 ? "Don't have an account? Sign up" 
