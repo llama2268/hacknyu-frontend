@@ -22,7 +22,6 @@ export default function LoginPage() {
         </p>
 
         <form onSubmit = {handleSubmit} className="mt-8 space-y-6">
-          {/* Email Input */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-white">Email address</label>
             <input
@@ -35,7 +34,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password Input */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
             <input
@@ -48,7 +46,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Remember Me and Forgot Password */}
           <div className="flex items-center justify-between">
             <label className="flex items-center">
               <input
@@ -60,7 +57,6 @@ export default function LoginPage() {
             <a href="#" className="text-sm text-indigo-600 hover:underline">Forgot password?</a>
           </div>
 
-          {/* Sign In Button */}
           <button
             type="submit"
             className="w-full py-4 text-lg font-semibold rounded-md bg-gradient-to-r from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600 text-white shadow-md hover:shadow-lg transition-transform transform hover:scale-105"
@@ -69,16 +65,13 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Divider for Social Login */}
         <div className="mt-8 flex items-center">
           <div className="flex-grow border-t border-gray-300"></div>
           <span className="mx-4 text-sm text-gray-500">or continue with</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
 
-        {/* Social Login Buttons */}
         <div className="mt-6 flex justify-center space-x-4">
-          {/* Google Login Button */}
           <button className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition">
             <svg className="w-6 h-6" viewBox="0 0 48 48">
               <path fill="#EA4335" d="M24 9.5c3.8 0 6.8 1.6 8.9 2.9l6.5-6.5C33.7 3.4 29.2 1 24 1 14.6 1 6.4 5.7 2.3 13.2l7.5 5.8C11.8 13.3 17.4 9.5 24 9.5z" />

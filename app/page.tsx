@@ -86,7 +86,7 @@ export default function Home() {
                 size: "lg",
                 variant: "shadow",
               })}
-              href="#get-started"
+              href="/login"
             >
               Get Started
             </Link>
@@ -245,7 +245,7 @@ export default function Home() {
                 size: "lg",
                 variant: "shadow",
               })}
-              href="#get-started"
+              href="/login"
             >
               Get Started
             </Link>

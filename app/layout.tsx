@@ -38,33 +38,35 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col h-screen">
-            <main className="w-full flex-grow">
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            {/* Remove container classes here to let content span full width */}
+            <main className="w-full flex-grow pt-16 px-6">
               {children}
             </main>
-            <footer className="w-full flex items-center justify-center py-3 bg-black-800 text-white">
-            <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
-                      HackNYU 2025 
-                </span>
-                <Link
-                  isExternal
-                  className="flex flex-col items-center gap-2"
-                  href="https://github.com/llama2268/hacknyu-frontend"
-                  title="Visit GitHub Repository"
-                >
-                  <img
-                    src="github-mark-white.svg"
-                    alt="GitHub Logo"
-                    className="h-8 w-8 transform transition-transform duration-200 group-hover:scale-125"
-                  />
-                </Link>
-                <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
-                      Made by Arnab, Tyler, Eva, and Lucas
-                </span>
+            <footer className="w-full flex items-center justify-center py-3 bg-black text-white">
+              <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
+                HackNYU 2025
+              </span>
+              <Link
+                isExternal
+                className="flex items-center px-3"
+                href="https://github.com/llama2268/hacknyu-frontend"
+                title="Visit GitHub Repository"
+              >
+                <img
+                  src="github-mark-white.svg"
+                  alt="GitHub Logo"
+                  className="h-8 w-8 transform transition-transform duration-200 group-hover:scale-125"
+                />
+              </Link>
+              <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
+                Made by Arnab, Tyler, Eva, and Lucas
+              </span>
             </footer>
           </div>
         </Providers>
