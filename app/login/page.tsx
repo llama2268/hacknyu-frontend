@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { Button} from "@heroui/button";
 
 export default function LoginPage() {
   const { login, register, error, isLoading } = useAuth();
@@ -96,14 +97,12 @@ export default function LoginPage() {
             />
           </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 transition-colors"
-            >
+          <div className="flex justify-center">
+          <Button size = "lg" type="submit" variant = "shadow"
+              disabled={isLoading} className="w-full max-w-md bg-gradient-to-r from-blue-700 to-purple-700 text-white"
+              >
               {isLoading ? "Loading..." : isLoginMode ? "Sign in" : "Register"}
-            </button>
+            </Button>
           </div>
 
           <div className="text-center">

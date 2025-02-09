@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useApi } from "../hooks/useApi";
 import { Recipe, GenerateRecipeParams } from "../types/api";
+import { Button } from "@heroui/button";
 
 export default function HealthPage() {
   const router = useRouter();
@@ -119,7 +120,7 @@ export default function HealthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-green-100 via-teal-100 to-blue-200 py-16 px-6">
+    <div className="min-h-screen bg-gradient-to-r from-green-100 via-teal-100 to-blue-200 py-16 px-6 pt-20">
       <div className="max-w-7xl mx-auto">
         {/* Show error message if exists */}
         {error && (
@@ -185,7 +186,7 @@ export default function HealthPage() {
 
         {/* Recipe Generation Form */}
         <div className="mt-12 flex justify-center">
-          <button
+          <Button
             onClick={() => setShowForm(!showForm)}
             disabled={isGenerating}
             className={`${buttonStyles({
@@ -196,7 +197,7 @@ export default function HealthPage() {
             })} transform hover:scale-105 hover:shadow-lg transition-transform duration-300`}
           >
             {isGenerating ? "Generating..." : showForm ? "Hide Recipe Form" : "Generate a New Recipe"}
-          </button>
+          </Button>
         </div>
 
         {showForm && (

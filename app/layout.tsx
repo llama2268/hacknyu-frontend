@@ -4,9 +4,14 @@ import { Link } from "@heroui/link";
 import clsx from "clsx";
 import { Providers } from "./providers";
 import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import LoadingWrapper from "./components/LoadingWrapper";
+import { Geist } from "next/font/google";
+
+const geist = Geist({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -39,7 +44,7 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          geist.className
         )}
       >
         <Providers>

@@ -8,53 +8,11 @@ import { button as buttonStyles } from "@heroui/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import Image from "next/image"
+import { Button } from "@heroui/button"
 
 export default function Home() {
   return (
     <main className="scroll-smooth">
-      <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-black bg-opacity-70 backdrop-blur-lg shadow-md">
-        <div className="text-2xl font-bold text-white">Fridge</div>
-        <ul className="hidden md:flex space-x-8">
-          <li>
-            <Link
-              href="#features"
-              className="text-white hover:text-gray-300 transition-colors duration-300"
-            >
-              Features
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#how-it-works"
-              className="text-white hover:text-gray-300 transition-colors duration-300"
-            >
-              How It Works
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#testimonials"
-              className="text-white hover:text-gray-300 transition-colors duration-300"
-            >
-              Testimonials
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#contact"
-              className="text-white hover:text-gray-300 transition-colors duration-300"
-            >
-              Contact
-            </Link>
-          </li>
-        </ul>
-        <Link
-          className="px-6 py-2 border-2 border-white text-white rounded-full hover:bg-white hover:text-black transition duration-300"
-          href="/login"
-        >
-          Log In
-        </Link>
-      </nav>
 
       <section
         className="relative flex items-center justify-center w-full h-screen text-center"
@@ -79,15 +37,14 @@ export default function Home() {
           </p>
           <div className="mt-8 flex justify-center gap-6 animate-fadeIn delay-800">
             <Link
-              className={buttonStyles({
-                color: "primary",
-                radius: "full",
-                size: "lg",
-                variant: "shadow",
-              })}
               href="/login"
             >
-              Get Started
+    <Button
+      className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+      radius="full"
+      size = "lg"
+    >      Get Started
+              </Button>
             </Link>
           </div>
         </div>
