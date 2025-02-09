@@ -249,7 +249,7 @@ export default function Home() {
       </section>
 
       <section id="testimonials" className="py-16 bg-gray-100">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 text-center">
           <h2
             className={title({
               class: "text-center text-4xl font-semibold text-gray-800",
