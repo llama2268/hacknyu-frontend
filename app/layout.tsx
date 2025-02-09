@@ -43,12 +43,11 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
-            <Navbar />
-            <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
+            <main className="w-full flex-grow">
               {children}
             </main>
             <footer className="w-full flex items-center justify-center py-3 bg-black-800 text-white">
-            <span className="font-medium transition-colors group-hover:text-blue-300">
+            <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
                       HackNYU 2025 
                 </span>
                 <Link
@@ -63,7 +62,7 @@ export default function RootLayout({
                     className="h-8 w-8 transform transition-transform duration-200 group-hover:scale-125"
                   />
                 </Link>
-                <span className="font-medium transition-colors group-hover:text-blue-300">
+                <span className="font-medium transition-colors group-hover:text-blue-300 px-5">
                       Made by Arnab, Tyler, Eva, and Lucas
                 </span>
             </footer>
