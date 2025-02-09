@@ -43,7 +43,6 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="flex flex-col min-h-screen">
-            <Navbar />
             {/* Remove container classes here to let content span full width */}
             <main className="w-full flex-grow pt-16 px-6">
               {children}
