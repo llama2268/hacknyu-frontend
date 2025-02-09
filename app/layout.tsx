@@ -43,7 +43,6 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
-            <Navbar />
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               {children}
             </main>
@@ -53,7 +52,7 @@ export default function RootLayout({
                 </span>
                 <Link
                   isExternal
-                  className="flex flex-col items-center gap-2"
+                  className="flex flex-col items-center px-3"
                   href="https://github.com/llama2268/hacknyu-frontend"
                   title="Visit GitHub Repository"
                 >
