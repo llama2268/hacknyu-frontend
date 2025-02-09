@@ -168,15 +168,79 @@ export default function HealthPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recipeHistory.map((recipe) => (
-              <div key={recipe.id} className="p-4 border rounded-lg">
-                <h3 className="font-semibold">{recipe.name}</h3>
-                <p className="text-sm text-gray-600">{recipe.ingredients}</p>
-                <div className="mt-2 flex gap-2">
+              <div key={recipe.id} className="p-6 border rounded-lg bg-white shadow-sm">
+                <h3 className="text-xl font-semibold mb-3">{recipe.name}</h3>
+                
+                {/* Ingredients */}
+                <div className="mb-4">
+                  <h4 className="font-medium text-gray-700 mb-2">Ingredients:</h4>
+                  <ul className="list-disc list-inside space-y-1">
+                    {recipe.ingredients.map((ing, idx) => (
+                      <li key={idx} className="text-gray-600">
+                        {ing.quantity} {ing.item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Instructions */}
+                <div className="mb-4">
+                  <h4 className="font-medium text-gray-700 mb-2">Instructions:</h4>
+                  <ol className="list-decimal list-inside space-y-2">
+                    {recipe.instructions.map((step, idx) => (
+                      <li key={idx} className="text-gray-600">{step}</li>
+                    ))}
+                  </ol>
+                </div>
+
+                {/* Recipe Info */}
+                <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+                  <div>
+                    <span className="font-medium">Cooking Time: </span>
+                    <span className="text-gray-600">{recipe.cookingTime} minutes</span>
+                  </div>
+                  <div>
+                    <span className="font-medium">Difficulty: </span>
+                    <span className="text-gray-600">{recipe.difficulty}</span>
+                  </div>
+                </div>
+
+                {/* Nutritional Info */}
+                <div className="bg-gray-50 p-3 rounded-md mb-4">
+                  <h4 className="font-medium text-gray-700 mb-2">Nutritional Information:</h4>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>
+                      <span className="font-medium">Calories: </span>
+                      <span className="text-gray-600">{recipe.nutritionalInfo.calories}</span>
+                    </div>
+                    <div>
+                      <span className="font-medium">Protein: </span>
+                      <span className="text-gray-600">{recipe.nutritionalInfo.protein}g</span>
+                    </div>
+                    <div>
+                      <span className="font-medium">Carbs: </span>
+                      <span className="text-gray-600">{recipe.nutritionalInfo.carbs}g</span>
+                    </div>
+                    <div>
+                      <span className="font-medium">Fat: </span>
+                      <span className="text-gray-600">{recipe.nutritionalInfo.fat}g</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2">
                   <button
                     onClick={() => handleSaveRecipe(recipe.id)}
                     className="text-blue-500 hover:text-blue-600"
                   >
                     Save Recipe
+                  </button>
+                  <button
+                    onClick={() => handleFavoriteRecipe(recipe.id)}
+                    className="text-yellow-500 hover:text-yellow-600"
+                  >
+                    ★ Favorite
                   </button>
                 </div>
               </div>
