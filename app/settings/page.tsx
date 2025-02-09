@@ -288,6 +288,20 @@ export default function SettingsPage() {
             {loadingPrefs ? "Updating..." : "Update Preferences"}
           </button>
         </form>
+        <div>
+            {/* Back Button */}
+        <div className="mt-6">
+          <button
+            id="goback"
+            onClick={() => {
+              window.location.href = "/interface";
+            }}
+            className="w-full py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700 transition"
+          >
+            Back
+          </button>
+        </div>
+          </div>
       </div>
     </div>
   );
